@@ -27,5 +27,13 @@ def specific_post(year, month, slug):
 
     return {'post': last_post, 'page_title': page_title}
 
+
+@get('/new/post')
+@view('new_post')
+def new_post_form():
+    return {}
+
+
+
 run(host='localhost', port=8080, debug=True, reloader=True)
 
