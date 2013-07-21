@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-from bottle import (route, run, view)
+from bottle import (get, route, run, view)
 from models import Post
 
 
-@route('/')
+@get('/')
 @view('post')
 def index():
     post = Post.select().where(Post.published==True).order_by(Post.date).limit(1).get()
