@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from bottle import (get, route, run, view)
+from bottle import (abort, get, route, run, view)
 from models import Post
 
 
@@ -15,6 +15,17 @@ def index():
         
     return {'post': last_post, 'page_title': page_title}
 
+
+@get('/<year:int>/<month:int>/<slug>')
+@view('post')
+def specific_post(year, month, slug):
+    try:
+        last_post = Post.select().where(Post.published==True).where(Post.slug==slug).where(Post.date.year==year).where(Post.date.month==month).get()
+        page_title = last_post.title
+    except Post.DoesNotExist:
+        abort(404, "POST not found.")
+
+    return {'post': last_post, 'page_title': page_title}
 
 run(host='localhost', port=8080, debug=True, reloader=True)
 

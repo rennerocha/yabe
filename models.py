@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import datetime
 from peewee import (Model, CharField, DateTimeField, 
     TextField, BooleanField, SqliteDatabase)
 
@@ -8,10 +9,10 @@ db = SqliteDatabase('yabe.db')
 class Post(Model):
     title = CharField()
     slug = CharField(unique=True)
-    date = DateTimeField()
+    date = DateTimeField(default=datetime.datetime.now)
     content = TextField()
     author = CharField(default=u'Renne Rocha')
-    published = BooleanField(default=False)
+    published = BooleanField(default=True)
 
     class Meta:
         database = db
