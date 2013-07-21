@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from bottle import (abort, get, route, run, view)
+from bottle import (abort, get, post, redirect, request, route, run, view)
 from models import Post
 
 
@@ -28,11 +28,22 @@ def specific_post(year, month, slug):
     return {'post': last_post, 'page_title': page_title}
 
 
-@get('/new/post')
+@get('/new/')
 @view('new_post')
 def new_post_form():
     return {}
 
+
+@post('/new/')
+def create_post():
+    title = request.forms.get('post_title')
+    content = request.forms.get('post_content')
+    author = request.forms.get('post_author')
+    slug = 'tefsd afste' #slugify(title)
+    new_post = Post(title=title, slug=slug, content=content, author=author)
+    new_post.save()
+
+    redirect('/{0}/{1}/{2}'.format(new_post.date.year, new_post.date.month, slug))
 
 
 run(host='localhost', port=8080, debug=True, reloader=True)

@@ -1,4 +1,4 @@
-<form method="POST" action="/new/post">
+<form method="POST" action=".">
 
 <ul>
 <li><label for="post_title">Author</label><input type="text" name="post_author"></li>
