@@ -16,4 +16,5 @@ class Post(Model):
     class Meta:
         database = db
 
-Post.create_table()
+Post.create_table(fail_silently=True)
+
