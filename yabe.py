@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from bottle import (abort, get, post, redirect, request, route, run, view)
-from models import Post
+from models import Comment, Post
+from utils import slugify
 
 
 @get('/')
@@ -39,11 +40,24 @@ def create_post():
     title = request.forms.get('post_title')
     content = request.forms.get('post_content')
     author = request.forms.get('post_author')
-    slug = 'tefsd afste' #slugify(title)
+    slug = slugify(title)
     new_post = Post(title=title, slug=slug, content=content, author=author)
     new_post.save()
 
     redirect('/{0}/{1}/{2}'.format(new_post.date.year, new_post.date.month, slug))
+
+
+@post('/new/comment/')
+def create_comment():
+    comment = request.forms.get('comment')
+    author = request.forms.get('author')
+    post_id = request.forms.get('post_id')
+    post = Post.select().where(Post.id==int(post_id)).get()
+
+    new_comment = Comment(comment=comment, author=author, post=post)
+    new_comment.save()
+
+    redirect('/{0}/{1}/{2}'.format(post.date.year, post.date.month, post.slug))
 
 
 run(host='localhost', port=8080, debug=True, reloader=True)
