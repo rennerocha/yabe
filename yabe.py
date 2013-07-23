@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from bottle import (abort, get, post, redirect, request, route, run, view)
+from bottle import (abort, get, post, redirect, request, route, run, view, static_file)
 from models import Comment, Post
 from utils import slugify
 
@@ -58,6 +58,19 @@ def create_comment():
     new_comment.save()
 
     redirect('/{0}/{1}/{2}'.format(post.date.year, post.date.month, post.slug))
+
+# Static Routes
+@get('/<filename:re:.*\.js>')
+def javascripts(filename):
+    return static_file(filename, root='static/js')
+
+@get('/<filename:re:.*\.css>')
+def stylesheets(filename):
+    return static_file(filename, root='static/css')
+
+@get('/<filename:re:.*\.(jpg|png|gif|ico)>')
+def images(filename):
+    return static_file(filename, root='static/img')
 
 
 run(host='localhost', port=8080, debug=True, reloader=True)
