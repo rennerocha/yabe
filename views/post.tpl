@@ -14,8 +14,9 @@
 %end
     </div>
     <div class="span2">
-      <a href="/arquivo/">ARQUIVO</a>
+      <a href="/archive/">ARCHIVE</a>
       <a href="https://github.com/rennerocha/yabe/">CÓDIGO-FONTE</a>
+      <a href="/new/">NEW POST</a>
     </div>
   </div>
 

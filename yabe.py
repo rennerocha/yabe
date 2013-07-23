@@ -17,6 +17,13 @@ def index():
     return {'post': last_post, 'page_title': page_title}
 
 
+@get('/archive/')
+@view('archive')
+def archive():
+    posts = Post.select()
+    return {'posts': posts, 'page_title': 'Archive'}
+
+
 @get('/<year:int>/<month:int>/<slug>')
 @view('post')
 def specific_post(year, month, slug):
