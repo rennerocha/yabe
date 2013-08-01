@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import datetime
-from peewee import (Model, CharField, DateTimeField, 
+from peewee import (Model, ForeignKeyField, CharField, DateTimeField, 
     TextField, BooleanField, SqliteDatabase)
 
 db = SqliteDatabase('yabe.db')
@@ -17,5 +17,16 @@ class Post(Model):
     class Meta:
         database = db
 
+
+class Comment(Model):
+    author = CharField()
+    date = DateTimeField(default=datetime.datetime.now)
+    comment = TextField()
+    post = ForeignKeyField(Post, related_name='comments')
+
+    class Meta:
+        database = db
+
 Post.create_table(fail_silently=True)
+Comment.create_table(fail_silently=True)
 
